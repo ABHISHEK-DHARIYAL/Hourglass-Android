@@ -12,3 +12,12 @@ export function apiUrl(path: string): string {
   const base = ((import.meta as any).env?.VITE_API_BASE_URL || DEFAULT_API_BASE).replace(/\/$/, '');
   return `${base}${path}`;
 }
+
+// AI Coach backend (Vercel serverless or Firebase Functions). Set VITE_COACH_API_BASE_URL to the
+// production URL of the site that serves /api/coach/*. Other /api routes still use apiUrl().
+export function coachApiUrl(path: string): string {
+  if (!isNative) return path;
+  const env = (import.meta as any).env || {};
+  const base = (env.VITE_COACH_API_BASE_URL || env.VITE_API_BASE_URL || DEFAULT_API_BASE).replace(/\/$/, '');
+  return `${base}${path}`;
+}

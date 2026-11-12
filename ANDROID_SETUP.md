@@ -56,3 +56,27 @@ npm install
 npm run android:sync
 npm run android:open   # opens Android Studio
 ```
+
+---
+
+## AI Coach (Android)
+
+The **AI Coach** tab works exactly like the web app. The app talks to the same backend (`/api/coach/*`) that the web app uses.
+
+1. **Backend URL** — GitHub repo → Settings → Secrets and variables → Actions → **Variables** → New variable:
+   `VITE_COACH_API_BASE_URL` = production URL of your deployed web app (e.g. `https://hourglass-xxxx.vercel.app`, no trailing slash).
+   Use the project's **production domain** (Vercel → Settings → Domains), not a `-git-` or per-deployment link, and make sure
+   Vercel **Deployment Protection** does not block it.
+2. **Backend env** (Vercel): `GEMINI_API_KEY`, `FIREBASE_SERVICE_ACCOUNT` (+ optional `GEMINI_MODEL`, `SMTP_*`, `CRON_SECRET`).
+   The web project's `api/coach/[action].ts` must include the CORS update (already in the web zip delivered with this feature).
+3. **Firebase / Google Cloud** — see "Firebase settings" below.
+
+### Firebase settings the Android app needs
+* Project settings → Your apps → **Android app `com.hourglass.planner`** exists.
+* Add the **SHA-1 and SHA-256** of your signing keystore to that app, then **re-download `google-services.json`** and update the
+  `GOOGLE_SERVICES_JSON` secret.
+* Authentication → Sign-in method → **Google** enabled.
+* Cloud Messaging → **Firebase Cloud Messaging API (V1)** enabled (push reminders).
+* Firestore rules: no change needed (`users/{uid}/coach_*` are covered by the existing per-user rules).
+* Google Cloud Console (same project): enable **Google Calendar API**; OAuth consent screen → add scope `.../auth/calendar.events`
+  and add your Gmail as a **test user**.

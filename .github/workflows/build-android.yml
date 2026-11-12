@@ -57,6 +57,9 @@ jobs:
           fi
 
       - name: Build web app
+        env:
+          # Production URL of the site that serves /api/coach/* (GitHub: Settings -> Secrets and variables -> Actions -> Variables)
+          VITE_COACH_API_BASE_URL: ${{ vars.VITE_COACH_API_BASE_URL }}
         run: npm run build
 
       - name: Sync web build into Android project

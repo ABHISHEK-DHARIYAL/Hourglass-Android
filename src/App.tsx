@@ -39,6 +39,7 @@ import MustDoSection from './components/MustDoSection';
 import HabitTrackerSection from './components/HabitTrackerSection';
 import DayTimelineView from './components/DayTimelineView';
 import TodoListPage from './components/TodoListPage';
+import CoachView from './components/CoachView';
 import TaskTemplateSection from './components/TaskTemplateSection';
 import GCalSyncButton from './components/GCalSyncButton';
 import DailyReflectionSection from './components/DailyReflectionSection';
@@ -377,7 +378,7 @@ export default function App() {
               />
             )}
 
-            {viewMode !== 'month' && viewMode !== 'todos' && (
+            {viewMode !== 'month' && viewMode !== 'todos' && viewMode !== 'coach' && (
               <>
                 <GlanceView
                   userId={user.uid}
@@ -432,6 +433,13 @@ export default function App() {
               />
             )}
 
+            {viewMode === 'coach' && (
+              <CoachView
+                userId={user.uid}
+                onAddTasks={async (list) => { for (const t of list) await handleImportTask(t); }}
+              />
+            )}
+
             {viewMode === 'todos' && (
               <TodoListPage
                 userId={user.uid}
@@ -443,7 +451,7 @@ export default function App() {
               />
             )}
 
-            {viewMode !== 'month' && viewMode !== 'todos' && (
+            {viewMode !== 'month' && viewMode !== 'todos' && viewMode !== 'coach' && (
               <div className="flex gap-2.5">
                 <button onClick={() => setShowCopyDayDialog(true)} className="btn-secondary flex-1 h-10 text-xs">
                   <Copy className="w-4 h-4" /> Duplicate Day Blocks
@@ -454,7 +462,7 @@ export default function App() {
               </div>
             )}
 
-            {viewMode !== 'month' && viewMode !== 'todos' && (
+            {viewMode !== 'month' && viewMode !== 'todos' && viewMode !== 'coach' && (
               <>
                 <TaskTemplateSection
                   userId={user.uid}
