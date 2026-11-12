@@ -33,6 +33,21 @@ Keep the keystore file safe — losing it means you can't update the installed a
 | `KEY_ALIAS` | `hourglass` |
 | `KEY_PASSWORD` | YOUR_PASSWORD |
 
+### 4b. GitHub repo → Settings → Secrets and variables → Actions → **Variables** tab
+Add the Firebase **Web app** config (Firebase Console → Project settings → Your apps → Web app → Config). These are not secret.
+| Variable | Value |
+|---|---|
+| `VITE_FIREBASE_API_KEY` | apiKey |
+| `VITE_FIREBASE_AUTH_DOMAIN` | authDomain |
+| `VITE_FIREBASE_PROJECT_ID` | projectId |
+| `VITE_FIREBASE_STORAGE_BUCKET` | storageBucket |
+| `VITE_FIREBASE_MESSAGING_SENDER_ID` | messagingSenderId |
+| `VITE_FIREBASE_APP_ID` | web appId (`1:...:web:...`) |
+| `VITE_FIREBASE_DATABASE_ID` | only if you use a named Firestore database |
+| `VITE_COACH_API_BASE_URL` | Vercel production domain, no trailing slash |
+
+Without these the app shows `auth/api-key-not-valid` on sign-in.
+
 ### 5. Build and install
 Actions tab → **Build Android APK → Run workflow**. When it finishes, open the repo's **Releases** page on your phone,
 download `Hourglass.apk`, and install it (allow "install unknown apps" when asked).
